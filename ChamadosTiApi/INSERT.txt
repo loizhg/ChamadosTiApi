@@ -1,0 +1,22 @@
+// inserção de chamado pelo postman
+// https://localhost:44326/chamados/save
+{
+    "Id_Usuario": 2,
+    "Descricao": "Rua Brusque",
+    "Importancia": 3,
+    "Chamado_Livre": 3,
+    "Chamado_Resolvido": 3
+}
+
+// inserção de usuario pelo postman
+//https://localhost:44326/usuarios/save
+{    
+    "Login": "loizhgg",
+    "Password": "1q2w3e",
+    "Nivel": 0,
+    "Nome": "luiz",
+    "Data_Nascimento": "2020-07-30",
+    "Unidade": 1
+}
+
+

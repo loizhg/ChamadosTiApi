@@ -1,0 +1,42 @@
+create table Usuario
+(
+	Id int identity(1,1) NOT NULL,
+	Login varchar (255) NOT NULL,
+	Password varchar (20) NOT NULL,
+	Nivel int NOT NULL,
+	Nome varchar (255) NOT NULL,
+	DataNascimento date NOT NULL,
+	Unidade int NOT NULL,
+	CONSTRAINT Pk_Pessoa PRIMARY KEY (Id)
+);
+
+CREATE TABLE Chamado
+(
+   Id int IDENTITY(1,1) NOT NULL,
+   IdUsuario int NOT NULL,   
+   Descricao varchar (255) NOT NULL,   
+   Importancia int NOT NULL, 
+   ChamadoLivre int NOT NULL, 
+   ChamadoResolvido int NOT NULL,
+   CONSTRAINT Pk_Chamado PRIMARY KEY (Id),
+   CONSTRAINT Fk_Usuario FOREIGN KEY (IdUsuario) REFERENCES Usuario(Id),
+);
+
+
+
+CREATE TABLE Atendimento
+(
+   Id int IDENTITY(1,1) NOT NULL,
+   IdChamado int NOT NULL, 
+   IdTecnico int NOT NULL, 
+   DataAtribuido date NOT NULL,   
+   DataEstimada date NOT NULL, 
+   AtendimentoResolvido int NOT NULL, 
+   DataResolucao date,
+   CONSTRAINT Pk_Atendimento PRIMARY KEY (Id),
+   CONSTRAINT Fk_Chamado FOREIGN KEY (IdChamado) REFERENCES Chamado(Id),
+   CONSTRAINT Fk_Tecnico FOREIGN KEY (IdTecnico) REFERENCES Usuario(Id),
+);
+
+INSERT INTO atendimento (Id_Chamado, Id_Tecnico, Data_Atribuido, Data_Estimada, Atendimento_Resolvido, Data_Resolucao)
+VALUES (7, 2, '18-06-2022', '18-06-2022', 0, '18-06-12' );
