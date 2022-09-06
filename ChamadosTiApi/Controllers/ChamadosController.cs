@@ -32,14 +32,38 @@ namespace ChamadosTiApi.Controllers
         }
 
         [HttpGet]
-        public IActionResult SearchById(int idUsuarioValidado)
+        public IActionResult SearchById(int IdUsuario)
         {
-            var resultado = chamadorepositorio.BuscarTodos(idUsuarioValidado);
+            var resultado = chamadorepositorio.BuscarPorId(IdUsuario);
 
             if (resultado == null || !resultado.Any())
                 return NotFound(new { mensage = $"Lista vazia." });
 
             return Ok(resultado);
        }
+
+        public IActionResult SearchAvalibles()
+        {
+            var resultado = chamadorepositorio.BuscarDisponiveis();
+
+            if (resultado == null || !resultado.Any())
+                return NotFound(new { mensage = $"Lista vazia." });
+
+            return Ok(resultado);
+        }
+
+        [HttpPut]
+        public IActionResult Update(int Id)
+        {
+
+            var resultado = chamadorepositorio.UpdateChamado(Id);
+
+            if (resultado) return Ok("Servico atualizado com sucesso. ");
+            return Ok(new
+            {
+                sucesso = false,
+                mensagem = "Erro ao atualizar o servico."
+            });
+        }
     }
 }

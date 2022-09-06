@@ -15,9 +15,12 @@ namespace ChamadosTiClient
             //VARIAVEIS PARA AS OPÇÕES DE INTERFACE
             int opcaoDeslogado = -1;
             int opcaoLogado = -1;
+            int opcaoChamado = -1;
+            int chamadoEscolhido = -1;
+
             bool logado = true;
-            int niveldoUsuario = 0;
-            int idUsuarioValidado = 2;
+            int niveldoUsuario = 1;
+            int idUsuarioValidado = 5;
 
             //INSTANCIAS NECESSÁRIAS 
             var usuarioService = new UsuarioService();
@@ -85,7 +88,7 @@ namespace ChamadosTiClient
                                 Console.WriteLine("Descricao: " + chamado.Descricao);
                                 Console.WriteLine("Importancia: " + chamado.Importancia);
                                 Console.WriteLine("ChamadoLivre: " + chamado.ChamadoLivre);
-                                Console.WriteLine("ChamadoResolvido: " + chamado.ChamadoResolvido);                                
+                                Console.WriteLine("ChamadoResolvido: " + chamado.ChamadoResolvido);
                                 Console.ForegroundColor = ConsoleColor.Cyan;
                                 Console.WriteLine("=====================================");
                                 Console.ForegroundColor = ConsoleColor.White;
@@ -93,7 +96,6 @@ namespace ChamadosTiClient
                         }
 
                     } while (opcaoLogado != 0);
-                    logado = false;
                 }
 
                 if (niveldoUsuario == 1)
@@ -108,6 +110,38 @@ namespace ChamadosTiClient
 
                         if (opcaoLogado == 1)
                         {
+                            var resultado = chamadoService.ListarChamadosDisponiveis();
+                            //mostra os dados na tela                    
+                            foreach (var chamado in resultado)
+                            {
+                                Console.ForegroundColor = ConsoleColor.Cyan;
+                                Console.WriteLine("\n=====================================");
+                                Console.ForegroundColor = ConsoleColor.White;
+                                Console.WriteLine("Id: " + chamado.Id);
+                                Console.WriteLine("Descricao: " + chamado.Descricao);
+                                Console.WriteLine("Importancia: " + chamado.Importancia);
+                                Console.WriteLine("ChamadoLivre: " + chamado.ChamadoLivre);
+                                Console.WriteLine("ChamadoResolvido: " + chamado.ChamadoResolvido);
+                                Console.ForegroundColor = ConsoleColor.Cyan;
+                                Console.WriteLine("=====================================");
+                                Console.ForegroundColor = ConsoleColor.White;
+                            }
+
+                            do
+                            {
+                                Console.WriteLine("Você gostaria de realizar um atendimento? ");
+                                Console.WriteLine("\n 1 - Selecionar um chamado");
+                                Console.WriteLine("\n 0 - Retornar para menu anterior");
+                                opcaoChamado = Convert.ToInt32(Console.ReadLine());
+
+                                if (opcaoChamado == 1) 
+                                {
+                                    Console.WriteLine("Escolha o id do chamado que você gostaria de atender: ");
+                                    chamadoEscolhido = Convert.ToInt32(Console.ReadLine());                                    
+                                    chamadoService.Atualizar(chamadoEscolhido);
+                                }
+
+                            } while (opcaoChamado != 0);
 
                         }
 
@@ -117,7 +151,6 @@ namespace ChamadosTiClient
                         }
 
                     } while (opcaoLogado != 0);
-                    logado = false;
                 }
             }
 
@@ -154,7 +187,6 @@ namespace ChamadosTiClient
                         Console.WriteLine($"{logado}");
 
                     }
-
 
                     if (opcaoDeslogado == 2)
                     {
