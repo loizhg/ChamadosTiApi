@@ -19,7 +19,7 @@ namespace ChamadosTiClient
             int chamadoEscolhido = -1;
 
             bool logado = true;
-            int niveldoUsuario = 1;
+            int niveldoUsuario = 0;
             int idUsuarioValidado = 5;
 
             //INSTANCIAS NECESSÁRIAS 
