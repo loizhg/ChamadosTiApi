@@ -20,12 +20,13 @@ namespace ChamadosTiClient
 
 
             bool logado = true;
-            int niveldoUsuario = 0;
-            int idUsuarioValidado = 5;
+            int niveldoUsuario = 1;
+            int idUsuarioValidado = 1;
 
             //INSTANCIAS NECESSÁRIAS 
             var usuarioService = new UsuarioService();
             var chamadoService = new ChamadoService();
+            var atendimentoService = new AtendimentoService();
 
             //OPÇÕES APOS O LOGIN
             if (logado)
@@ -140,6 +141,28 @@ namespace ChamadosTiClient
                                     Console.WriteLine("Escolha o id do chamado que você gostaria de atender: ");
                                     chamadoEscolhido = Convert.ToInt32(Console.ReadLine());                                    
                                     chamadoService.Atualizar(chamadoEscolhido);
+
+                                    int idChamado = chamadoEscolhido;
+                                    int idTecnico = idUsuarioValidado;
+                                    DateTime dataAtribuido = DateTime.Now; 
+                                    DateTime dataEstimada;
+                                    Console.WriteLine("\n Diga uma data para a resolução do problema");
+                                    dataEstimada = Convert.ToDateTime(Console.ReadLine());
+                                    int atendimentoResolvido = 0;
+                                    
+
+                                    //AQUI CRIA O ATENDIMENTO DO CHAMADO
+                                    var atendimento = new Atendimento()
+                                    {                                        
+                                        IdChamado = idChamado,
+                                        IdTecnico = idTecnico,
+                                        DataAtribuido = dataAtribuido,
+                                        DataEstimada = dataEstimada,
+                                        AtendimentoResolvido = atendimentoResolvido,                                       
+
+                                    };
+
+                                    atendimentoService.Cadastrar(atendimento);
                                 }
 
                             } while (opcaoChamado != 0);

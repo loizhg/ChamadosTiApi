@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace ChamadosTiClient.Service
 {
-    class ChamadoService
+    public class ChamadoService
     {
 
         public void Cadastrar(Chamado chamado)
