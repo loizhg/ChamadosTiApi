@@ -15,7 +15,8 @@ namespace ChamadosTiApi.Repositories
 {
     public class AtendimentoRepository
     {
-        private readonly string _connection = @"Data Source=ITELABD13\SQLEXPRESS;Initial Catalog=ProjetoFinalDB;Integrated Security=True";
+        //private readonly string _connection = @"Data Source=ITELABD13\SQLEXPRESS;Initial Catalog=ProjetoFinalDB;Integrated Security=True";
+        private readonly string _connection = @"Data Source=DESKTOP-88BTRFG\SQLEXPRESS;Initial Catalog=chamadosDB;Integrated Security=True";
 
         public bool SalvarAtendimento(Atendimento atendimento)
         {
@@ -70,6 +71,29 @@ namespace ChamadosTiApi.Repositories
             {
                 Console.WriteLine("Erro: " + ex.Message);
                 return null;
+            }
+        }
+
+        public bool FinalizarAtendimento(int Id)
+        {
+            try
+            {
+                var query = @$"UPDATE atendimento SET AtendimentoResolvido = 1 WHERE Id = @Id";
+                using (var sql = new SqlConnection(_connection))
+                {
+                    SqlCommand command = new SqlCommand(query, sql);
+                    command.Parameters.AddWithValue("@Id", Id);
+                    command.Connection.Open();
+                    command.ExecuteScalar();
+                }
+
+                Console.WriteLine("Chamado atualizado com sucesso.");
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Erro: " + ex.Message);
+                return false;
             }
         }
     }

@@ -39,5 +39,26 @@ namespace ChamadosTiClient.Service
                 Console.WriteLine(ex.Message);
             }
         }
+
+        public void FinalizarAtendimento(int atendimentoEscolhido)
+        {
+            HttpClient httpClient = new HttpClient();
+            HttpResponseMessage response;
+
+            try
+            {
+                response = httpClient.UpdateAsJsonAsync($"https://localhost:44378/atendimentos/Finish?Id= {atendimentoEscolhido}", atendimentoEscolhido).Result;
+
+                if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
+                {
+                    Console.WriteLine(response);
+                }
+
+            }
+            catch (HttpRequestException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
     }
 }

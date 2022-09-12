@@ -42,5 +42,19 @@ namespace ChamadosTiApi.Controllers
 
             return Ok(resultado);
         }
+
+        [HttpPut]
+        public IActionResult Finish(int Id)
+        {
+
+            var resultado = atendimentorepositorio.FinalizarAtendimento(Id);
+
+            if (resultado) return Ok("Servico atualizado com sucesso. ");
+            return Ok(new
+            {
+                sucesso = false,
+                mensagem = "Erro ao atualizar o servico."
+            });
+        }
     }
 }

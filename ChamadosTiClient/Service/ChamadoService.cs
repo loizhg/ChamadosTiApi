@@ -134,6 +134,27 @@ namespace ChamadosTiClient.Service
             }
         }
 
+        public void FinalizarChamado(int chamadoEscolhido)
+        {
+            HttpClient httpClient = new HttpClient();
+            HttpResponseMessage response;
+
+            try
+            {
+                response = httpClient.UpdateAsJsonAsync($"https://localhost:44378/chamados/Finish?Id= {chamadoEscolhido}", chamadoEscolhido).Result;
+
+                if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
+                {
+                    Console.WriteLine(response);
+                }
+
+            }
+            catch (HttpRequestException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+
 
 
 

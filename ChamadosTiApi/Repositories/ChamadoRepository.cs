@@ -15,7 +15,8 @@ namespace ChamadosTiApi.Repositories
 {
     public class ChamadoRepository
     {
-        private readonly string _connection = @"Data Source=ITELABD13\SQLEXPRESS;Initial Catalog=ProjetoFinalDB;Integrated Security=True";
+        //private readonly string _connection = @"Data Source=ITELABD13\SQLEXPRESS;Initial Catalog=ProjetoFinalDB;Integrated Security=True";
+        private readonly string _connection = @"Data Source=DESKTOP-88BTRFG\SQLEXPRESS;Initial Catalog=chamadosDB;Integrated Security=True";
 
         public bool SalvarChamado(Chamado chamado)
         {
@@ -120,5 +121,8 @@ namespace ChamadosTiApi.Repositories
                 return false;
             }
         }
+
+
+       
     }
 }

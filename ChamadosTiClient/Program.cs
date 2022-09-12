@@ -17,16 +17,19 @@ namespace ChamadosTiClient
             int opcaoLogado = -1;
             int opcaoChamado = -1;
             int chamadoEscolhido = -1;
+            int opcaoAtendimento = -1;
+            int atendimentoEscolhido = -1;
 
 
             bool logado = true;
-            int niveldoUsuario = 1;
-            int idUsuarioValidado = 1;
+            int niveldoUsuario = 0;
+            int idUsuarioValidado = 3;
 
             //INSTANCIAS NECESSÁRIAS 
             var usuarioService = new UsuarioService();
             var chamadoService = new ChamadoService();
             var atendimentoService = new AtendimentoService();
+            var atendimentoDetalhadoService = new AtendimentoDetalhadoService();
 
             //OPÇÕES APOS O LOGIN
             if (logado)
@@ -39,6 +42,7 @@ namespace ChamadosTiClient
                         Console.WriteLine("O que você gostaria de fazer? ");
                         Console.WriteLine("\n 1 - Cadastrar um chamado");
                         Console.WriteLine("\n 2 - Visualizar meus chamados");
+                        Console.WriteLine("\n 3 - Visualizar atendimentos");
                         Console.WriteLine("\n 0 - Deslogar");
                         opcaoLogado = Convert.ToInt32(Console.ReadLine());
 
@@ -97,9 +101,34 @@ namespace ChamadosTiClient
                             }
                         }
 
+                        if (opcaoLogado == 3)
+                        {
+                            var resultado = atendimentoDetalhadoService.ListarAtendimentosUsuario(idUsuarioValidado);
+                            //mostra os dados na tela                    
+                            foreach (var atendimentos in resultado)
+                            {
+                                Console.ForegroundColor = ConsoleColor.Cyan;
+                                Console.WriteLine("\n=====================================");
+                                Console.ForegroundColor = ConsoleColor.White;
+                                Console.WriteLine("Id: " + atendimentos.Id);
+                                Console.WriteLine("IdChamado: " + atendimentos.IdChamado);                                 
+                                 Console.WriteLine("IdTecnico: " + atendimentos.IdTecnico);                                    
+                                Console.WriteLine("DataAtribuido: " + atendimentos.DataAtribuido);                           
+                                Console.WriteLine("DataEstimada: " + atendimentos.DataEstimada);                    
+                                Console.WriteLine("AtendimentoResolvido: " + atendimentos.AtendimentoResolvido);                   
+                                Console.WriteLine("DataResolucao: " + atendimentos.DataResolucao);                 
+                                Console.WriteLine("Nome do tecnico: " + atendimentos.Nome);              
+                                Console.WriteLine("Descricao do chamado: " + atendimentos.Descricao);                                                     
+                                Console.ForegroundColor = ConsoleColor.Cyan;
+                                Console.WriteLine("=====================================");
+                                Console.ForegroundColor = ConsoleColor.White;
+                            }
+                        }
+
                     } while (opcaoLogado != 0);
                 }
 
+                //OPÇÕES DE USUARIO TECNICO
                 if (niveldoUsuario == 1)
                 {
                     do
@@ -171,7 +200,43 @@ namespace ChamadosTiClient
 
                         if (opcaoLogado == 2)
                         {
+                            var resultado = atendimentoDetalhadoService.ListarAtendimentosTecnico(idUsuarioValidado);
+                            //mostra os dados na tela                    
+                            foreach (var atendimentos in resultado)
+                            {
+                                Console.ForegroundColor = ConsoleColor.Cyan;
+                                Console.WriteLine("\n=====================================");
+                                Console.ForegroundColor = ConsoleColor.White;
+                                Console.WriteLine("Id: " + atendimentos.Id);
+                                Console.WriteLine("IdChamado: " + atendimentos.IdChamado);
+                                Console.WriteLine("IdTecnico: " + atendimentos.IdTecnico);
+                                Console.WriteLine("DataAtribuido: " + atendimentos.DataAtribuido);
+                                Console.WriteLine("DataEstimada: " + atendimentos.DataEstimada);
+                                Console.WriteLine("AtendimentoResolvido: " + atendimentos.AtendimentoResolvido);
+                                Console.WriteLine("DataResolucao: " + atendimentos.DataResolucao);
+                                Console.WriteLine("Nome do tecnico: " + atendimentos.Nome);
+                                Console.WriteLine("Descricao do chamado: " + atendimentos.Descricao);
+                                Console.WriteLine("Descricao do chamado: " + atendimentos.IdUsuario);
+                                Console.ForegroundColor = ConsoleColor.Cyan;
+                                Console.WriteLine("=====================================");
+                                Console.ForegroundColor = ConsoleColor.White;
 
+                                do
+                                {
+                                    Console.WriteLine("Você gostaria de finalizar um atendimento? ");
+                                    Console.WriteLine("\n 1 - Selecionar um atendimento");
+                                    Console.WriteLine("\n 0 - Retornar para menu anterior");
+                                    opcaoAtendimento = Convert.ToInt32(Console.ReadLine());
+
+                                    if (opcaoAtendimento == 1)
+                                    {
+                                        Console.WriteLine("Escolha o id do atendimento que você gostaria de atender: ");
+                                        atendimentoEscolhido = Convert.ToInt32(Console.ReadLine());
+                                        atendimentoService.FinalizarAtendimento(atendimentoEscolhido);
+                                    }
+
+                                } while (opcaoAtendimento != 0);
+                            }
                         }
 
                     } while (opcaoLogado != 0);
